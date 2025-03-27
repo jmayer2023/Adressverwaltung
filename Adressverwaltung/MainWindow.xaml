@@ -1,0 +1,191 @@
+﻿<Window x:Class="Adressverwaltung.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Adressverwaltung"
+        mc:Ignorable="d"
+        Title="Adressverwaltung" Height="450" Width="800" MinWidth="800"
+        Background="#E0F7FA">
+    <!-- Hintergrund ^^ -->
+    <Grid>
+        <Grid.RowDefinitions>
+            <!-- Zeile für die GroupBox für den Kunden -->
+            <RowDefinition Height="Auto"/>
+            <!-- Zeile für die GroupBox für den Ansprechpartner -->
+            <RowDefinition Height="Auto"/>
+            <!-- Zeile für die Knöpfe -->
+            <RowDefinition Height="Auto"/>
+            <!-- Zeile für die Listen -->
+            <RowDefinition Height="Auto"/>
+            <!-- Zeile für die ListBox -->
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <!-- Flexibles Layout für Kunde -->
+            <ColumnDefinition Width="*" />
+            <!-- Flexibles Layout für Ansprechpartner -->
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <!-- Box Kunde -->
+        <GroupBox Header="Kunde" Margin="10" Grid.Row="0" Grid.Column="0">
+            <Grid Margin="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <!-- Name -->
+                <Label Content="Name" Foreground="Black" Grid.Row="0" />
+                <TextBox x:Name="KD_Name" Grid.Row="0" Margin="100,0,0,10" TextChanged="TextBox_TextChanged"/>
+                <!-- Straße -->
+                <Label Content="Straße" Foreground="Black" Grid.Row="1" />
+                <TextBox x:Name="KD_Straße" Grid.Row="1" Margin="100,0,0,10" TextChanged="TextBox_TextChanged"/>
+                <!-- Ort -->
+                <Label Content="Ort" Foreground="Black" Grid.Row="2" />
+                <TextBox x:Name="KD_Ort" Grid.Row="2" Margin="100,0,0,10" TextChanged="TextBox_TextChanged"/>
+                <!-- PLZ -->
+                <Label Content="PLZ" Foreground="Black" Grid.Row="3" />
+                <TextBox x:Name="KD_PLZ" Grid.Row="3" Margin="100,0,0,10" TextChanged="TextBox_TextChanged"/>
+                <!-- Land -->
+                <Label Content="Land" Foreground="Black" Grid.Row="4" />
+                <TextBox x:Name="KD_Land" Grid.Row="4" Margin="100,0,0,10" TextChanged="TextBox_TextChanged"/>
+                <!-- Knöpfe -->
+                <StackPanel Orientation="Horizontal" Grid.Row="5" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,10,0,0">
+                    <Button Content="Neu" Margin="5" Click="NewKunde_Click" Background="#003366" Foreground="White" MinWidth="60"/>
+                    <Button x:Name="KD_Suchen" Content="Suchen" Margin="5" Click="SearchKunde_Click" Background="#003366" Foreground="White" MinWidth="60"/>
+                    <Button Content="Löschen" Margin="5" Click="DeleteKunde_Click" Background="#003366" Foreground="White" MinWidth="60"/>
+                    <Button x:Name="AP_Finden" Content="Ansprechpartner finden" Margin="5" IsEnabled="False" Click="AP_Finden_Click" Background="#003366" Foreground="White" MinWidth="130"/>
+                </StackPanel>
+            </Grid>
+        </GroupBox>
+        <!-- Box Ansprechpartner -->
+        <GroupBox Header="Ansprechpartner" Margin="10" Grid.Row="0" Grid.Column="1">
+            <Grid Margin="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <!-- Anrede (ComboBox) -->
+                <Label Content="Anrede" Foreground="Black" Grid.Row="0" />
+                <ComboBox x:Name="AP_Anrede" Grid.Row="0" Margin="100,0,0,10" Foreground="Black" SelectionChanged="ComboBox_SelectionChanged">
+                    <ComboBoxItem Content="Frau"/>
+                    <ComboBoxItem Content="Herr"/>
+                    <ComboBoxItem Content="Frau Dr."/>
+                    <ComboBoxItem Content="Herr Dr."/>
+                    <ComboBoxItem Content="Frau Professorin"/>
+                    <ComboBoxItem Content="Herr Professor"/>
+                    <ComboBoxItem Content="Divers"/>
+                </ComboBox>
+                <!-- Name -->
+                <Label Content="Name" Foreground="Black" Grid.Row="1" />
+                <TextBox x:Name="AP_Name" Grid.Row="1" Margin="100,0,0,10" TextChanged="TextBox_TextChanged"/>
+                <!-- Vorname -->
+                <Label Content="Vorname" Foreground="Black" Grid.Row="2" />
+                <TextBox x:Name="AP_Vorname" Grid.Row="2" Margin="100,0,0,10" TextChanged="TextBox_TextChanged"/>
+                <!-- Knöpfe -->
+                <StackPanel Orientation="Horizontal" Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,10,0,0">
+                    <Button Content="Neu" Margin="5" Click="NewPerson_Click" Background="#003366" Foreground="White" MinWidth="60"/>
+                    <Button x:Name="AP_Suchen" Content="Suchen" Margin="5" Click="SearchPerson_Click" Background="#003366" Foreground="White" MinWidth="60"/>
+                    <Button Content="Löschen" Margin="5" Click="DeletePerson_Click" Background="#003366" Foreground="White" MinWidth="60"/>
+                    <Button x:Name="Zuordnung" Content="Kunden zuordnen" Margin="5" IsEnabled="False" Click="KDforAP_Click" Background="#003366" Foreground="White" MinWidth="60"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Grid.Row="4" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,10,0,0">
+                    <Button x:Name="KD_Finden" Content="Kunden finden" Margin="5" IsEnabled="False" Click="KD_Finden_Click" Background="#003366" Foreground="White" MinWidth="90"/>
+                </StackPanel>
+            </Grid>
+        </GroupBox>
+        <!-- Listen und Clear All Button -->
+        <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="10">
+            <Button Content="Liste Kunde" Margin="10" Click="ListKD_Click" Background="#FF9900" Foreground="White" MinWidth="125"/>
+            <Button Content="Clear All" Margin="10" Click="ClearAll_Click" Background="#FF9900" Foreground="White" MinWidth="125"/>
+            <Button Content="Liste Ansprechpartner" Margin="10" Click="ListAP_Click" Background="#FF9900" Foreground="White" MinWidth="125"/>
+        </StackPanel>
+        <!-- ListView für die Kundenliste -->
+        <ListView x:Name="ListeKunde" MouseDoubleClick="ListeKunde_MouseDoubleClick" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="1" Margin="10" Background="#ADD8E6" BorderBrush="#007ACC" BorderThickness="1" Padding="5">
+            <ListView.Resources>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="Margin" Value="2"/>
+                    <Setter Property="Background" Value="Transparent"/>
+                    <Setter Property="BorderThickness" Value="1"/>
+                    <Setter Property="BorderBrush" Value="#007ACC"/>
+                    <Setter Property="Padding" Value="5"/>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="ListViewItem">
+                                <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                                    <ContentPresenter />
+                                </Border>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="#B0E0E6"/>
+                        </Trigger>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Background" Value="#87CEFA"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </ListView.Resources>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBox Text="{Binding Name}" Width="auto" MinWidth="80" Margin="5" Background="White"/>
+                        <TextBox Text="{Binding Straße}" Width="auto" MinWidth="80" Margin="5" Background="White"/>
+                        <TextBox Text="{Binding Ort}" Width="auto" MinWidth="80" Margin="5" Background="White"/>
+                        <TextBox Text="{Binding PLZ}" Width="auto" MinWidth="80" Margin="5" Background="White"/>
+                        <TextBox Text="{Binding Land}" Width="auto" MinWidth="80" Margin="5" Background="White"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <!-- ListView für die Ansprechpartnerliste -->
+        <ListView x:Name="ListeAP" MouseDoubleClick="ListeAP_MouseDoubleClick" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="1" Margin="10" Background="#ADD8E6" BorderBrush="#007ACC" BorderThickness="1" Padding="5">
+            <ListView.Resources>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="Margin" Value="2"/>
+                    <Setter Property="Background" Value="Transparent"/>
+                    <Setter Property="BorderThickness" Value="1"/>
+                    <Setter Property="BorderBrush" Value="#007ACC"/>
+                    <Setter Property="Padding" Value="5"/>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="ListViewItem">
+                                <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" >
+                                    <ContentPresenter />
+                                </Border>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="#B0E0E6"/>
+                        </Trigger>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Background" Value="#87CEFA"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </ListView.Resources>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBox Text="{Binding Anrede}" Width="auto" MinWidth="80" Margin="5" Background="White" />
+                        <TextBox Text="{Binding Vorname}" Width="auto" MinWidth="80" Margin="5" Background="White" />
+                        <TextBox Text="{Binding Nachname}" Width="auto" MinWidth="80" Margin="5" Background="White" />
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </Grid>
+</Window>
+ 
